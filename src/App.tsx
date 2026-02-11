@@ -36,7 +36,7 @@ const App: React.FC = () => {
   const visitorId = localStorage.getItem('valentine_visitor_id') || 'unknown';
   
   try {
-    await fetch('/api/valentine-yes', {
+    await fetch('/api', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
