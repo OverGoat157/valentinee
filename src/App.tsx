@@ -84,15 +84,21 @@ const App: React.FC = () => {
     setNoClicks(prev => prev + 1);
 
     // Перемещаем кнопку "Нет" после нажатия
-    const maxX = window.innerWidth - 200;
-    const maxY = window.innerHeight - 200;
+    // Размер кнопки примерно 180px в ширину и 60px в высоту с padding
+    const buttonWidth = 200;
+    const buttonHeight = 80;
 
-    const randomX = Math.random() * maxX - maxX / 2;
-    const randomY = Math.random() * maxY - maxY / 2;
+    // Максимальные границы для перемещения (с учетом размера кнопки и отступов)
+    const maxX = (window.innerWidth - buttonWidth) / 2 - 50;
+    const maxY = (window.innerHeight - buttonHeight) / 2 - 50;
+
+    // Генерируем случайные координаты в безопасных пределах
+    const randomX = (Math.random() - 0.5) * 2 * maxX;
+    const randomY = (Math.random() - 0.5) * 2 * maxY;
 
     setNoButtonPosition({
-      x: Math.max(-maxX / 2, Math.min(maxX / 2, randomX)),
-      y: Math.max(-maxY / 2, Math.min(maxY / 2, randomY))
+      x: randomX,
+      y: randomY
     });
   };
 
@@ -158,7 +164,8 @@ const App: React.FC = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        height: "100vh",
+        minHeight: "100vh",
+        width: "100%",
         fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
         textAlign: "center",
         background: "linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%)",
