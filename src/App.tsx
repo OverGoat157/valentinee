@@ -80,15 +80,10 @@ const App: React.FC = () => {
   const secondImg = "https://media.tenor.com/f1xnRxTRxLAAAAAj/bears-with-kisses-bg.gif";
 
   const handleNo = () => {
+    // Увеличиваем счетчик попыток
     setNoClicks(prev => prev + 1);
-  };
 
-  // Функция для перемещения кнопки "Нет" при приближении мыши
-  const handleNoButtonHover = () => {
-    // Чем больше попыток, тем дальше убегает кнопка
-    const moveDistance = 100 + (noClicks * 20);
-
-    // Генерируем случайные координаты в пределах экрана
+    // Перемещаем кнопку "Нет" после нажатия
     const maxX = window.innerWidth - 200;
     const maxY = window.innerHeight - 200;
 
@@ -220,7 +215,6 @@ const App: React.FC = () => {
             </button>
             <button
               onClick={handleNo}
-              onMouseEnter={handleNoButtonHover}
               style={{
                 fontSize: "18px",
                 margin: "10px",
