@@ -1,16 +1,156 @@
-# React + Vite
+# 💕 Valentine's Day Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Интерактивный сайт-валентинка с уведомлениями в Telegram и приватной статистикой.
 
-Currently, two official plugins are available:
+## ✨ Возможности
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 💘 Красивая анимированная валентинка
+- 🎉 Конфетти при нажатии "Да"
+- 💕 Падающие сердечки на фоне
+- 🏃 Убегающая кнопка "Нет"
+- 📱 Telegram уведомления с детальной информацией
+- 📊 Приватный Dashboard с графиками и статистикой
+- 🔒 Защита паролем для Dashboard
 
-## React Compiler
+## 🚀 Деплой на Vercel
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Шаг 1: Подготовка
 
-## Expanding the ESLint configuration
+1. Убедитесь, что у вас есть аккаунт на [Vercel](https://vercel.com)
+2. Установите Vercel CLI (опционально):
+   ```bash
+   npm install -g vercel
+   ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Шаг 2: Деплой через GitHub
+
+1. Загрузите проект на GitHub:
+   ```bash
+   git add .
+   git commit -m "Ready for deployment"
+   git push origin main
+   ```
+
+2. Перейдите на [Vercel Dashboard](https://vercel.com/dashboard)
+3. Нажмите "Add New Project"
+4. Импортируйте репозиторий с GitHub
+5. Vercel автоматически определит настройки
+
+### Шаг 3: Настройка переменных окружения
+
+В настройках проекта на Vercel добавьте переменные окружения:
+
+#### Обязательные переменные:
+
+1. `TELEGRAM_TOKEN` - токен вашего Telegram бота (от @BotFather)
+2. `TELEGRAM_CHAT_ID` - ваш Telegram ID (от @userinfobot)
+3. `VITE_DASHBOARD_PASSWORD` - пароль для доступа к Dashboard
+
+#### Как добавить переменные:
+1. Откройте ваш проект на Vercel
+2. Перейдите в Settings → Environment Variables
+3. Добавьте каждую переменную с её значением
+4. Выберите все окружения (Production, Preview, Development)
+
+### Шаг 4: Настройка хранилища данных
+
+Для сохранения статистики нужно настроить Redis:
+
+1. В Vercel Dashboard откройте вкладку **Storage**
+2. Нажмите **Create Database**
+3. Выберите **KV** (Redis)
+4. Дайте имя базе данных (например: `valentine-stats`)
+5. Нажмите **Create**
+6. Подключите базу к вашему проекту
+7. Vercel автоматически добавит переменные окружения для KV
+
+**Примечание**: Если не настроить хранилище, сайт будет работать, но статистика не будет сохраняться.
+
+### Шаг 5: Проверка деплоя
+
+После деплоя проверьте:
+- ✅ Основной сайт открывается
+- ✅ Кнопка "Да" отправляет уведомления в Telegram
+- ✅ Dashboard открывается по адресу `/dashboard`
+- ✅ Авторизация в Dashboard работает
+
+## 💻 Локальная разработка
+
+1. Установите зависимости:
+   ```bash
+   npm install
+   ```
+
+2. Создайте файл `.env` из примера:
+   ```bash
+   cp .env.example .env
+   ```
+
+3. Заполните переменные в `.env`:
+   ```env
+   TELEGRAM_TOKEN=your_telegram_bot_token
+   TELEGRAM_CHAT_ID=your_chat_id
+   VITE_DASHBOARD_PASSWORD=your_password
+   ```
+
+4. Запустите dev сервер:
+   ```bash
+   npm run dev
+   ```
+
+5. Откройте http://localhost:5174
+
+## 📊 Доступ к статистике
+
+Dashboard доступен по адресу: `https://ваш-домен.vercel.app/dashboard`
+
+Пароль: тот, что вы указали в `VITE_DASHBOARD_PASSWORD`
+
+## 🛠️ Технологии
+
+- React 19
+- Vite
+- TypeScript
+- Recharts (графики)
+- React Router
+- Canvas Confetti
+- Vercel (хостинг)
+- Vercel KV (Redis для хранения данных)
+
+## 📝 Структура проекта
+
+```
+valentinee/
+├── api/                    # Serverless функции для Vercel
+│   ├── index.js           # API для сохранения ответов
+│   └── stats.js           # API для получения статистики
+├── src/
+│   ├── components/        # React компоненты
+│   ├── pages/            # Страницы (Dashboard)
+│   ├── App.tsx           # Основное приложение
+│   └── main.jsx          # Точка входа
+├── data/                 # Локальное хранилище данных (dev)
+├── .env                  # Переменные окружения (не в git)
+├── .env.example          # Пример переменных
+├── vercel.json           # Конфигурация Vercel
+└── package.json
+```
+
+## 🔒 Безопасность
+
+- ❌ `.env` файл добавлен в `.gitignore`
+- ✅ Dashboard защищен паролем
+- ✅ Токены хранятся в переменных окружения
+- ✅ CORS настроен для API endpoints
+
+## 📞 Telegram Bot Setup
+
+1. Откройте Telegram и найдите [@BotFather](https://t.me/BotFather)
+2. Отправьте `/newbot` и следуйте инструкциям
+3. Скопируйте токен бота
+4. Найдите [@userinfobot](https://t.me/userinfobot) и получите свой Chat ID
+5. Добавьте оба значения в переменные окружения
+
+---
+
+Сделано с 💖
